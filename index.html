@@ -506,7 +506,7 @@ async function init() {
     fetch('timeline_trip.json').then(r => r.json()),
   ]);
 
-  catalog = cat;
+  catalog = cat.sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp));
 
   for (const d of days) {
     dayIndex[d.day] = d;
