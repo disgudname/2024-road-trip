@@ -413,7 +413,7 @@
       <div id="polaroid">
         <div id="media-container">
           <img id="photo-img" alt="" />
-          <video id="photo-video" controls playsinline></video>
+          <video id="photo-video" playsinline></video>
           <div id="loading-spinner">loading…</div>
         </div>
         <div id="star-badge">★</div>
@@ -630,14 +630,12 @@ function updateDisplay() {
   if (isVid) {
     $img.style.display = 'none';
     $video.style.display = 'block';
-    if ($video.src !== new URL(src, location.href).href) {
-      $video.pause();
-      $video.src = src;
-    }
+    $video.src = src;
+    $video.play().catch(() => {});
   } else {
-    $video.style.display = 'none';
     $video.pause();
     $video.removeAttribute('src');
+    $video.style.display = 'none';
     $img.style.display = 'block';
     $img.src = src;
   }
