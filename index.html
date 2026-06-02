@@ -413,7 +413,7 @@
       <div id="polaroid">
         <div id="media-container">
           <img id="photo-img" alt="" />
-          <video id="photo-video" playsinline></video>
+          <video id="photo-video" playsinline loop></video>
           <div id="loading-spinner">loading…</div>
         </div>
         <div id="star-badge">★</div>
@@ -579,26 +579,27 @@ function buildFilmStrip() {
     item.className = 'thumb-item';
     item.dataset.index = i;
 
-    if (entry.is_video) {
-      const d = document.createElement('div');
-      d.className = 'thumb-video';
-      d.textContent = '▶';
-      item.appendChild(d);
-    } else {
-      const img = document.createElement('img');
-      img.className = 'thumb-img';
-      img.src = entry.src;
-      img.alt = '';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      item.appendChild(img);
-    }
+    const img = document.createElement('img');
+    img.className = 'thumb-img';
+    img.src = 'thumbs/' + entry.src.replace(/\.[^.]+$/, '.jpg');
+    img.alt = '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    item.appendChild(img);
 
     if (highlights.has(entry.filename)) {
       const s = document.createElement('span');
       s.className = 'thumb-star';
       s.textContent = '★';
       item.appendChild(s);
+    }
+
+    if (entry.is_video) {
+      const v = document.createElement('span');
+      v.className = 'thumb-star';
+      v.style.cssText = 'right:auto;left:2px;font-size:10px;color:rgba(255,255,255,0.7);';
+      v.textContent = '▶';
+      item.appendChild(v);
     }
 
     item.addEventListener('click', () => navigate(i));
