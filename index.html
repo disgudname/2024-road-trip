@@ -671,7 +671,9 @@ function updateDisplay() {
   const items = $thumbRow.querySelectorAll('.thumb-item');
   items.forEach((el, i) => el.classList.toggle('active', i === currentIndex));
   const active = items[currentIndex];
-  if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  if (active) {
+    $thumbRow.scrollLeft = active.offsetLeft - ($thumbRow.clientWidth / 2) + (active.offsetWidth / 2);
+  }
 }
 
 // ── Keyboard ─────────────────────────────────────────────────────────────────
