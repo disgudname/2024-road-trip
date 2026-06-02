@@ -95,8 +95,6 @@
       background: var(--polar);
       padding: 13px 13px 54px 13px;
       box-shadow: 8px 10px 28px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.5);
-      transform: rotate(-1.2deg);
-      transition: transform 0.35s ease;
       z-index: 1;
       max-width: calc(100% - 40px);
     }
@@ -459,7 +457,6 @@
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-const ROTATIONS = [-1.2, 0.8, -0.5, 1.1, -0.7, 0.4, -1.0, 0.6, -0.3, 0.9];
 
 // ── State ────────────────────────────────────────────────────────────────────
 
@@ -629,9 +626,6 @@ function updateDisplay() {
   // Counter
   $counter.textContent = `${currentIndex + 1} / ${catalog.length}`;
 
-  // Polaroid rotation
-  $polaroid.style.transform = `rotate(${ROTATIONS[currentIndex % ROTATIONS.length]}deg)`;
-
   // Media
   if (isVid) {
     $img.style.display = 'none';
@@ -666,6 +660,12 @@ function updateDisplay() {
   if (map && entry.lat && entry.lon) {
     photoMarker.setLatLng([entry.lat, entry.lon]);
   }
+
+  // Preload neighbours so next/prev navigation feels instant
+  [-2, -1, 1, 2, 3].forEach(offset => {
+    const e = catalog[currentIndex + offset];
+    if (e && !e.is_video) { new Image().src = e.src; }
+  });
 
   // Film strip active
   const items = $thumbRow.querySelectorAll('.thumb-item');
