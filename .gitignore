@@ -1,0 +1,19 @@
+# Too large for GitHub (>100 MB)
+20240603181018_204592.MP4
+GH016200_1717279531098.MP4
+Timeline.json
+
+# Dev tooling
+.claude/
+.playwright-mcp/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
